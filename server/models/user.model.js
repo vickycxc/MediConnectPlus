@@ -28,7 +28,6 @@ export const User = sequelize.define(
     phone_number: {
       type: DataTypes.STRING,
       allowNull: false,
-      unique: true,
     },
     role: {
       type: DataTypes.ENUM("patient", "doctor"),

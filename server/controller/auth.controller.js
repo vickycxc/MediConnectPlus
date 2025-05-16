@@ -12,6 +12,14 @@ export const register = async (req, res) => {
     phone_number,
     role,
     drug_allergies,
+    profile_picture_url,
+    str_number,
+    sip_number,
+    specialization,
+    practice_start_year,
+    practice_location,
+    practice_city,
+    off_schedule_fee,
   } = req.body;
   try {
     if (
@@ -55,11 +63,33 @@ export const register = async (req, res) => {
       drug_allergies,
     });
 
-    if (newUser) {
+    if (newUser && role === "patient") {
       generateToken(newUser.id, res);
-      return res.status(201).json({ message: "Registrasi berhasil" });
+      return res.status(201).json({ message: "Registrasi Pasien berhasil" });
     }
-  } catch (error) {}
+
+    if (role === "doctor") {
+      const newDoctor = await newUser.createDoctor({
+        profile_picture_url,
+        str_number,
+        sip_number,
+        specialization,
+        practice_start_year,
+        practice_location,
+        practice_city,
+        off_schedule_fee,
+      });
+      if (newDoctor) {
+        generateToken(newUser.id, res);
+        return res.status(201).json({ message: "Registrasi Dokter berhasil" });
+      }
+    }
+  } catch (error) {
+    console.error("Error di register controller", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server",
+    });
+  }
 };
 
 export const login = async (req, res) => {
@@ -94,7 +124,17 @@ export const login = async (req, res) => {
   }
 };
 
-export const logout = async (req, res) => {};
+export const logout = async (req, res) => {
+  try {
+    res.clearCookie("jwt");
+    return res.status(200).json({ message: "Logout berhasil" });
+  } catch (error) {
+    console.error("Error di logout controller", error);
+    return res.status(500).json({
+      message: "Terjadi kesalahan pada server",
+    });
+  }
+};
 
 export const checkAuth = async (req, res) => {};
 
