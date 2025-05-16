@@ -8,11 +8,14 @@ import { connectDB } from "./lib/db.js";
 const app = express();
 const port = 3000;
 
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/messages", messageRoutes);
 app.use("/api/doctors", doctorRoutes);
 app.listen(port, () => {
   console.log(`Listening on port ${port}`);
+
   connectDB();
 });

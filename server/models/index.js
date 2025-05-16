@@ -1,14 +1,14 @@
-import { CompoundedMedication } from "./compunded_medication.model";
-import { Consultation } from "./consultation.model";
-import { Diagnosis } from "./diagnosis.model";
-import { Doctor } from "./doctor.model";
-import { DoctorEducation } from "./doctor_education.model";
-import { DoctorNote } from "./doctor_note.model";
-import { DoctorSchedule } from "./doctor_schedule.model";
-import { Message } from "./message.model";
-import { Notification } from "./notification.model";
-import { Prescription } from "./prescription.model";
-import { User } from "./user.model";
+import { CompoundedMedication } from "./compunded_medication.model.js";
+import { Consultation } from "./consultation.model.js";
+import { Diagnosis } from "./diagnosis.model.js";
+import { Doctor } from "./doctor.model.js";
+import { DoctorEducation } from "./doctor_education.model.js";
+import { DoctorNote } from "./doctor_note.model.js";
+import { DoctorSchedule } from "./doctor_schedule.model.js";
+import { Message } from "./message.model.js";
+import { Notification } from "./notification.model.js";
+import { Prescription } from "./prescription.model.js";
+import { User } from "./user.model.js";
 
 // User - Doctor (1:1)
 User.hasOne(Doctor, {

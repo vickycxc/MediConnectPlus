@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../lib/db";
+import { sequelize } from "../lib/db.js";
 
 export const User = sequelize.define(
   "user",
@@ -18,7 +18,7 @@ export const User = sequelize.define(
       allowNull: false,
     },
     birth_date: {
-      type: DataTypes.DATE,
+      type: DataTypes.DATEONLY,
       allowNull: false,
     },
     gender: {

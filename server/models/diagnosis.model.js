@@ -1,11 +1,11 @@
 import { DataTypes } from "sequelize";
-import sequelize from "../lib/db";
+import { sequelize } from "../lib/db.js";
 
 export const Diagnosis = sequelize.define(
   "diagnosis",
   {
     consultation_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     diagnosis: {
