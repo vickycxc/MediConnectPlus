@@ -13,7 +13,7 @@ export const Message = sequelize.define(
       allowNull: false,
     },
     consultation_id: {
-      type: DataTypes.INTEGER,
+      type: DataTypes.STRING,
       allowNull: false,
     },
     message: {
@@ -36,10 +36,6 @@ export const Message = sequelize.define(
         "prescription"
       ),
       allowNull: false,
-    },
-    message_id: {
-      type: DataTypes.INTEGER,
-      allowNull: true,
     },
     is_read: {
       type: DataTypes.BOOLEAN,

@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import sequelize from "../lib/db";
 
-export const CompoundedMed = sequelize.define("compounded_med", {
+export const CompoundedMedication = sequelize.define("compounded_medication", {
   prescription_id: {
     type: DataTypes.INTEGER,
     allowNull: false,
