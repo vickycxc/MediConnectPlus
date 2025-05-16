@@ -1,9 +1,12 @@
+import { CompoundedMedication } from "./compunded_medication.model";
 import { Consultation } from "./consultation.model";
+import { Diagnosis } from "./diagnosis.model";
 import { Doctor } from "./doctor.model";
 import { DoctorEducation } from "./doctor_education.model";
 import { DoctorNote } from "./doctor_note.model";
 import { DoctorSchedule } from "./doctor_schedule.model";
 import { Message } from "./message.model";
+import { Notification } from "./notification.model";
 import { Prescription } from "./prescription.model";
 import { User } from "./user.model";
 
@@ -125,4 +128,16 @@ CompoundedMedication.belongsTo(Prescription, {
   foreignKey: "prescription_id",
 });
 
-export { User, Doctor, Message, Notification };
+export {
+  User,
+  Doctor,
+  Message,
+  Notification,
+  Consultation,
+  Diagnosis,
+  DoctorEducation,
+  DoctorSchedule,
+  DoctorNote,
+  Prescription,
+  CompoundedMedication,
+};
