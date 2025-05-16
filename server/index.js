@@ -4,12 +4,14 @@ import messageRoutes from "./routes/message.route.js";
 import doctorRoutes from "./routes/doctor.route.js";
 import express from "express";
 import { connectDB } from "./lib/db.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const port = 3000;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
 app.use("/api/auth", authRoutes);
 app.use("/api/consultations", consultationRoutes);
 app.use("/api/messages", messageRoutes);
