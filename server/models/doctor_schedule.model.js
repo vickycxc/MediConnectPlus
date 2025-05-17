@@ -4,38 +4,36 @@ import { sequelize } from "../lib/db.js";
 export const DoctorSchedule = sequelize.define(
   "doctor_schedule",
   {
-    doctor_id: {
+    doctorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
     day: {
       type: DataTypes.ENUM(
-        "monday",
-        "tuesday",
-        "wednesday",
-        "thursday",
-        "friday",
-        "saturday",
-        "sunday"
+        "Senin",
+        "Selasa",
+        "Rabu",
+        "Kamis",
+        "Jum'at",
+        "Sabtu",
+        "Minggu"
       ),
       allowNull: false,
     },
-    time_start: {
+    timeStart: {
       type: DataTypes.TIME,
       allowNull: false,
     },
-    time_end: {
+    timeEnd: {
       type: DataTypes.TIME,
       allowNull: false,
     },
-    consultation_fee: {
+    consultationFee: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

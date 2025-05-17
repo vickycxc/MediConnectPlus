@@ -20,62 +20,64 @@ Doctor.belongsTo(User, {
 
 // User - Message (1:N)
 User.hasMany(Message, {
-  foreignKey: "sender_id",
+  foreignKey: "senderId",
 });
 User.hasMany(Message, {
-  foreignKey: "receiver_id",
+  foreignKey: "receiverId",
 });
 Message.belongsTo(User, {
-  foreignKey: "sender_id",
+  foreignKey: "senderId",
 });
 Message.belongsTo(User, {
-  foreignKey: "receiver_id",
+  foreignKey: "receiverId",
 });
 
 // User - Notification (1:N)
 User.hasMany(Notification, {
-  foreignKey: "receiver_id",
+  foreignKey: "receiverId",
 });
 User.hasMany(Notification, {
-  foreignKey: "sender_id",
+  foreignKey: "senderId",
 });
 Notification.belongsTo(User, {
-  foreignKey: "receiver_id",
+  foreignKey: "receiverId",
 });
 Notification.belongsTo(User, {
-  foreignKey: "sender_id",
+  foreignKey: "senderId",
 });
 
 // User - Consultation (1:N)
 User.hasMany(Consultation, {
-  foreignKey: "patient_id",
+  foreignKey: "patientId",
 });
 Consultation.belongsTo(User, {
-  foreignKey: "patient_id",
+  foreignKey: "patientId",
 });
 
 // Doctor - Consultation (1:N)
 Doctor.hasMany(Consultation, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
 });
 Consultation.belongsTo(Doctor, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
 });
 
 // Doctor - Education (1:N)
 Doctor.hasMany(DoctorEducation, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
+  as: "doctorEducations",
 });
 DoctorEducation.belongsTo(Doctor, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
 });
 
 // Doctor - Doctor Schedule (1:N)
 Doctor.hasMany(DoctorSchedule, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
+  as: "doctorSchedules",
 });
 DoctorSchedule.belongsTo(Doctor, {
-  foreignKey: "doctor_id",
+  foreignKey: "doctorId",
 });
 
 // Consultation - Doctor Note (1:1)
@@ -88,44 +90,44 @@ DoctorNote.belongsTo(Consultation, {
 
 // Consultation - Prescription (1:N)
 Consultation.hasMany(Prescription, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 Prescription.belongsTo(Consultation, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 
 // Consultation - Message (1:N)
 Consultation.hasMany(Message, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 Message.belongsTo(Consultation, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 
 // Message - Message (1:1)
 Message.hasOne(Message, {
-  foreignKey: "reply_to",
+  foreignKey: "replyTo",
   as: "reply",
 });
 Message.belongsTo(Message, {
-  foreignKey: "reply_to",
+  foreignKey: "replyTo",
   as: "parent_message",
 });
 
 // Doctor Note - Diagnosis (1:N)
 DoctorNote.hasMany(Diagnosis, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 Diagnosis.belongsTo(DoctorNote, {
-  foreignKey: "consultation_id",
+  foreignKey: "consultationId",
 });
 
 // Prescription - Compounded Medication (1:N)
 Prescription.hasMany(CompoundedMedication, {
-  foreignKey: "prescription_id",
+  foreignKey: "prescriptionId",
 });
 CompoundedMedication.belongsTo(Prescription, {
-  foreignKey: "prescription_id",
+  foreignKey: "prescriptionId",
 });
 
 export {

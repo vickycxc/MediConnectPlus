@@ -4,7 +4,7 @@ import { sequelize } from "../lib/db.js";
 export const User = sequelize.define(
   "user",
   {
-    full_name: {
+    fullName: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -17,7 +17,7 @@ export const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    birth_date: {
+    birthDate: {
       type: DataTypes.DATEONLY,
       allowNull: false,
     },
@@ -25,7 +25,7 @@ export const User = sequelize.define(
       type: DataTypes.ENUM("male", "female"),
       allowNull: false,
     },
-    phone_number: {
+    phoneNumber: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -33,14 +33,12 @@ export const User = sequelize.define(
       type: DataTypes.ENUM("patient", "doctor"),
       allowNull: false,
     },
-    drug_allergies: {
+    drugAllergies: {
       type: DataTypes.STRING,
       allowNull: true,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

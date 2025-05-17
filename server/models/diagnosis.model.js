@@ -4,7 +4,7 @@ import { sequelize } from "../lib/db.js";
 export const Diagnosis = sequelize.define(
   "diagnosis",
   {
-    consultation_id: {
+    consultationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -12,23 +12,21 @@ export const Diagnosis = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    diagnosis_type: {
+    diagnosisType: {
       type: DataTypes.ENUM(
-        "primary_diagnosis",
-        "secondary_diagnosis",
-        "additional_diagnosis"
+        "Diagnosis Primer",
+        "Diagnosis Sekunder",
+        "Diagnosis Tambahan"
       ),
       allowNull: false,
     },
-    is_provosional: {
+    isProvosional: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
     tableName: "diagnoses",
     freezeTableName: true,
   }

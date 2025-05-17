@@ -4,11 +4,11 @@ import { sequelize } from "../lib/db.js";
 export const Prescription = sequelize.define(
   "prescription",
   {
-    consultation_id: {
+    consultationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    is_compounded: {
+    isCompounded: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
@@ -24,14 +24,12 @@ export const Prescription = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    compounding_method: {
-      type: DataTypes.ENUM("injeksi", "kapsul", "puyer", "salep", "sirup"),
+    compoundingMethod: {
+      type: DataTypes.ENUM("Injeksi", "Kapsul", "Puyer", "Salep", "Sirup"),
       allowNull: true,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

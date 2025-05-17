@@ -4,7 +4,7 @@ import { sequelize } from "../lib/db.js";
 export const DoctorEducation = sequelize.define(
   "doctor_education",
   {
-    doctor_id: {
+    doctorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
@@ -12,25 +12,23 @@ export const DoctorEducation = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    education_level: {
+    educationLevel: {
       type: DataTypes.ENUM(
-        "sarjana",
-        "profesi",
-        "spesialis",
-        "subspesialis",
-        "magister",
-        "doktor"
+        "Sarjana",
+        "Profesi",
+        "Spesialis",
+        "Subspesialis",
+        "Magister",
+        "Doktor"
       ),
       allowNull: false,
     },
-    graduation_year: {
+    graduationYear: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

@@ -1,34 +1,37 @@
 import bcryptjs from "bcryptjs";
-import { User } from "../models/index.js";
+import { DoctorEducation, DoctorSchedule, User } from "../models/index.js";
 import { generateToken } from "../lib/jwt.js";
+import cloudinary from "../lib/cloudinary.js";
 
 export const register = async (req, res) => {
   const {
-    full_name,
+    fullName,
     email,
     password,
-    birth_date,
+    birthDate,
     gender,
-    phone_number,
+    phoneNumber,
     role,
-    drug_allergies,
-    profile_picture_url,
-    str_number,
-    sip_number,
+    drugAllergies,
+    profilePicture,
+    strNumber,
+    sipNumber,
     specialization,
-    practice_start_year,
-    practice_location,
-    practice_city,
-    off_schedule_fee,
+    practiceStartYear,
+    practiceLocation,
+    practiceCity,
+    offScheduleFee,
+    doctorEducations,
+    doctorSchedules,
   } = req.body;
   try {
     if (
-      !full_name ||
+      !fullName ||
       !email ||
       !password ||
-      !birth_date ||
+      !birthDate ||
       !gender ||
-      !phone_number ||
+      !phoneNumber ||
       !role
     ) {
       return res.status(400).json({ message: "Semua field harus diisi" });
@@ -53,14 +56,14 @@ export const register = async (req, res) => {
     const hashedPassword = await bcryptjs.hash(password, salt);
 
     const newUser = await User.create({
-      full_name,
+      fullName,
       email,
       password: hashedPassword,
-      birth_date,
+      birthDate,
       gender,
-      phone_number,
+      phoneNumber,
       role,
-      drug_allergies,
+      drugAllergies,
     });
 
     if (newUser && role === "patient") {
@@ -69,17 +72,50 @@ export const register = async (req, res) => {
     }
 
     if (role === "doctor") {
+      if (
+        /*         !profilePicture || */
+        !strNumber ||
+        !sipNumber ||
+        !practiceStartYear ||
+        !practiceLocation ||
+        !practiceCity ||
+        !offScheduleFee
+      ) {
+        return res.status(400).json({
+          message: "Semua field harus diisi",
+        });
+      }
+
+      // const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+      // const profilePictureUrl = uploadResponse.secure_url;
+      const profilePictureUrl = "wlawal";
+
       const newDoctor = await newUser.createDoctor({
-        profile_picture_url,
-        str_number,
-        sip_number,
+        profilePictureUrl,
+        strNumber,
+        sipNumber,
         specialization,
-        practice_start_year,
-        practice_location,
-        practice_city,
-        off_schedule_fee,
+        practiceStartYear,
+        practiceLocation,
+        practiceCity,
+        offScheduleFee,
       });
-      if (newDoctor) {
+
+      console.log("ini edukasi: ", typeof doctorEducations);
+
+      const educations = doctorEducations.map((edu) => ({
+        ...edu,
+        doctorId: newDoctor.id,
+      }));
+      const newDoctorEducations = await DoctorEducation.bulkCreate(educations);
+
+      const schedules = doctorSchedules.map((schedule) => ({
+        ...schedule,
+        doctorId: newDoctor.id,
+      }));
+      const newDoctorSchedules = await DoctorSchedule.bulkCreate(schedules);
+
+      if (newUser && newDoctor && newDoctorEducations && newDoctorSchedules) {
         generateToken(newUser.id, res);
         return res.status(201).json({ message: "Registrasi Dokter berhasil" });
       }
@@ -151,31 +187,33 @@ export const checkAuth = async (req, res) => {
 
 export const updateProfile = async (req, res) => {
   const {
-    full_name,
+    fullName,
     email,
     password,
-    birth_date,
+    birthDate,
     gender,
-    phone_number,
+    phoneNumber,
     role,
-    drug_allergies,
-    profile_picture_url,
-    str_number,
-    sip_number,
+    drugAllergies,
+    profilePicture,
+    strNumber,
+    sipNumber,
     specialization,
-    practice_start_year,
-    practice_location,
-    practice_city,
-    off_schedule_fee,
+    practiceStartYear,
+    practiceLocation,
+    practiceCity,
+    offScheduleFee,
+    doctorEducations,
+    doctorSchedules,
   } = req.body;
   try {
     if (
-      !full_name ||
+      !fullName ||
       !email ||
       !password ||
-      !birth_date ||
+      !birthDate ||
       !gender ||
-      !phone_number ||
+      !phoneNumber ||
       !role
     ) {
       return res.status(400).json({ message: "Semua field harus diisi" });
@@ -191,31 +229,71 @@ export const updateProfile = async (req, res) => {
       return res.status(404).json({ message: "Pengguna tidak ditemukan" });
     }
 
-    user.full_name = full_name;
+    user.fullName = fullName;
     user.email = email;
     user.password = password;
-    user.birth_date = birth_date;
+    user.birthDate = birthDate;
     user.gender = gender;
-    user.phone_number = phone_number;
-    user.drug_allergies = drug_allergies;
+    user.phoneNumber = phoneNumber;
+    user.drugAllergies = drugAllergies;
 
     await user.save();
 
     if (role === "doctor") {
+      if (
+        /*         !profilePicture || */
+        !strNumber ||
+        !sipNumber ||
+        !practiceStartYear ||
+        !practiceLocation ||
+        !practiceCity ||
+        !offScheduleFee
+      ) {
+        return res.status(400).json({
+          message: "Semua field harus diisi",
+        });
+      }
       const doctor = await user.getDoctor();
       if (!doctor) {
-        return res.status(404).json({ message: "Dokter tidak ditemukan" });
+        return res.status(404).json({ message: "Dokter Tidak Ditemukan" });
       }
-      doctor.profile_picture_url = profile_picture_url;
-      doctor.str_number = str_number;
-      doctor.sip_number = sip_number;
+
+      // const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+      // const profilePictureUrl = uploadResponse.secure_url;
+      const profilePictureUrl = "wlawal";
+
+      doctor.profilePictureUrl = profilePictureUrl;
+      doctor.strNumber = strNumber;
+      doctor.sipNumber = sipNumber;
       doctor.specialization = specialization;
-      doctor.practice_start_year = practice_start_year;
-      doctor.practice_location = practice_location;
-      doctor.practice_city = practice_city;
-      doctor.off_schedule_fee = off_schedule_fee;
+      doctor.practiceStartYear = practiceStartYear;
+      doctor.practiceLocation = practiceLocation;
+      doctor.practiceCity = practiceCity;
+      doctor.offScheduleFee = offScheduleFee;
 
       await doctor.save();
+
+      await DoctorEducation.destroy({
+        where: {
+          doctorId: doctor.id,
+        },
+      });
+      const educations = doctorEducations.map((edu) => ({
+        ...edu,
+        doctorId: doctor.id,
+      }));
+      await DoctorEducation.bulkCreate(educations);
+
+      await DoctorSchedule.destroy({
+        where: {
+          doctorId: doctor.id,
+        },
+      });
+      const schedules = doctorSchedules.map((schedule) => ({
+        ...schedule,
+        doctorId: doctor.id,
+      }));
+      await DoctorSchedule.bulkCreate(schedules);
 
       return res.status(200).json({
         message: "Profil Dokter Berhasil Diperbarui",

@@ -4,11 +4,11 @@ import { sequelize } from "../lib/db.js";
 export const Notification = sequelize.define(
   "notification",
   {
-    receiver_id: {
+    receiverId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    sender_id: {
+    senderId: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
@@ -16,14 +16,12 @@ export const Notification = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
     },
-    is_read: {
+    isRead: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

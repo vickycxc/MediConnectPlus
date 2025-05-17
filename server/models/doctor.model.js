@@ -4,61 +4,59 @@ import { sequelize } from "../lib/db.js";
 export const Doctor = sequelize.define(
   "doctor",
   {
-    profile_picture_url: {
+    profilePictureUrl: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    str_number: {
+    strNumber: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    sip_number: {
+    sipNumber: {
       type: DataTypes.STRING,
       allowNull: false,
     },
     specialization: {
       type: DataTypes.ENUM(
-        "dokter_umum",
-        "spesialis_mata",
-        "spesialis_anak",
-        "spesialis_kulit",
-        "spesialis_tht",
-        "spesialis_kandungan",
-        "psikiater",
-        "spesialis_paru",
-        "spesialis_penyakit_dalam",
-        "psikolog_klinis",
-        "dokter_hewan",
-        "dokter_gigi",
-        "spesialis_saraf",
-        "spesialis_andrologi",
-        "spesialis_gizi",
-        "spesialis_bedah",
-        "spesialis_jantung",
-        "spesialis_rehabilitasi_medik"
+        "Dokter Umum",
+        "Spesialis Mata",
+        "Spesialis Anak",
+        "Spesialis Kulit & Kelamin",
+        "Spesialis THT",
+        "Spesialis Kandungan & Kebidanan",
+        "Psikiater",
+        "Spesialis Paru",
+        "Spesialis Penyakit Dalam",
+        "Psikolog Klinis",
+        "Dokter Hewan",
+        "Dokter Gigi",
+        "Spesialis Saraf",
+        "Spesialis Andrologi & Urologi",
+        "spesialis Gizi",
+        "Spesialis Bedah",
+        "spesialis Jantung",
+        "spesialis Rehabilitasi Medik"
       ),
       allowNull: false,
     },
-    practice_start_year: {
+    practiceStartYear: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    practice_location: {
+    practiceLocation: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    practice_city: {
+    practiceCity: {
       type: DataTypes.STRING,
       allowNull: false,
     },
-    off_schedule_fee: {
+    offScheduleFee: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

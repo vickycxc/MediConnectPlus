@@ -4,15 +4,15 @@ import { sequelize } from "../lib/db.js";
 export const Message = sequelize.define(
   "message",
   {
-    sender_id: {
+    senderId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    receiver_id: {
+    receiverId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    consultation_id: {
+    consultationId: {
       type: DataTypes.STRING,
       allowNull: false,
     },
@@ -20,31 +20,29 @@ export const Message = sequelize.define(
       type: DataTypes.TEXT,
       allowNull: true,
     },
-    image_url: {
+    imageUrl: {
       type: DataTypes.STRING,
       allowNull: true,
     },
-    reply_to: {
+    replyTo: {
       type: DataTypes.INTEGER,
       allowNull: true,
     },
-    message_type: {
+    messageType: {
       type: DataTypes.ENUM(
-        "message",
-        "consultation_time",
-        "doctor_note",
-        "prescription"
+        "Pesan",
+        "Waktu Konsultasi",
+        "Catatan Dokter",
+        "Resep Digital"
       ),
       allowNull: false,
     },
-    is_read: {
+    isRead: {
       type: DataTypes.BOOLEAN,
       defaultValue: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );

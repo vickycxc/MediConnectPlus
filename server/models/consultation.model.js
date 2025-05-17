@@ -10,34 +10,32 @@ export const Consultation = sequelize.define(
       autoIncrement: false,
       primaryKey: true,
     },
-    patient_id: {
+    patientId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    doctor_id: {
+    doctorId: {
       type: DataTypes.INTEGER,
       allowNull: false,
     },
-    time_start: {
+    timeStart: {
       type: DataTypes.DATE,
       allowNull: false,
     },
-    time_end: {
+    timeEnd: {
       type: DataTypes.DATE,
       allowNull: true,
     },
-    next_consultation: {
+    nextConsultation: {
       type: DataTypes.DATEONLY,
       allowNull: true,
     },
     status: {
-      type: DataTypes.ENUM("active", "completed", "scheduled", "canceled"),
+      type: DataTypes.ENUM("Aktif", "Selesai", "Dijadwalkan", "Dibatalkan"),
       allowNull: false,
     },
   },
   {
     timestamps: true,
-    createdAt: "created_at",
-    updatedAt: "updated_at",
   }
 );
