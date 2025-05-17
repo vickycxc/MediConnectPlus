@@ -18,10 +18,8 @@ export const protectRoute = async (req, res, next) => {
         .json({ message: "Tidak Diizinkan - Token Tidak Valid" });
     }
 
-    const user = await User.findOne({
-      where: {
-        id: decoded.id,
-      },
+    const user = await User.findByPk(decoded.id, {
+      attributes: { exclude: ["password"] },
     });
 
     if (!user) {

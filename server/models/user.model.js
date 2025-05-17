@@ -22,7 +22,7 @@ export const User = sequelize.define(
       allowNull: false,
     },
     gender: {
-      type: DataTypes.ENUM("male", "female"),
+      type: DataTypes.ENUM("Laki-Laki", "Perempuan"),
       allowNull: false,
     },
     phoneNumber: {
@@ -30,7 +30,7 @@ export const User = sequelize.define(
       allowNull: false,
     },
     role: {
-      type: DataTypes.ENUM("patient", "doctor"),
+      type: DataTypes.ENUM("Pasien", "Dokter"),
       allowNull: false,
     },
     drugAllergies: {

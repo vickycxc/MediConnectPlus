@@ -9,8 +9,8 @@ export const getMessages = async (req, res) => {
 
     const messages = await Message.findAll({
       where: {
-        receiver_id: { [Op.or]: [userId, userToChatId] },
-        sender_id: { [Op.or]: [user.id, userToChatId] },
+        receiverId: { [Op.or]: [userId, userToChatId] },
+        senderId: { [Op.or]: [userId, userToChatId] },
       },
     });
 
@@ -24,14 +24,8 @@ export const getMessages = async (req, res) => {
 };
 export const sendMessage = async (req, res) => {
   try {
-    const {
-      consultation_id: consultationId,
-      message,
-      image,
-      reply_to: replyTo,
-      message_type: messageType,
-      message_id: messageId,
-    } = req.body;
+    const { consultationId, message, image, replyTo, messageType, messageId } =
+      req.body;
     const { id: senderId } = req.user;
     const { id: receiverId } = req.params;
 
@@ -41,15 +35,15 @@ export const sendMessage = async (req, res) => {
       imageUrl = uploadResponse.secure_url;
     }
 
-    const newMessage = Message.create({
-      consultation_id: consultationId,
-      sender_id: senderId,
-      receiver_id: receiverId,
+    await Message.create({
+      consultationId,
+      senderId,
+      receiverId,
       message,
       image: imageUrl,
-      reply_to: replyTo,
-      message_type: messageType,
-      message_id: messageId,
+      replyTo,
+      messageType,
+      messageId,
     });
 
     res.status(200).json({

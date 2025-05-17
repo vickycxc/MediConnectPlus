@@ -66,14 +66,14 @@ export const register = async (req, res) => {
       drugAllergies,
     });
 
-    if (newUser && role === "patient") {
+    if (newUser && role === "Pasien") {
       generateToken(newUser.id, res);
       return res.status(201).json({ message: "Registrasi Pasien berhasil" });
     }
 
-    if (role === "doctor") {
+    if (role === "Dokter") {
       if (
-        /*         !profilePicture || */
+        !profilePicture ||
         !strNumber ||
         !sipNumber ||
         !practiceStartYear ||
@@ -86,9 +86,8 @@ export const register = async (req, res) => {
         });
       }
 
-      // const uploadResponse = await cloudinary.uploader.upload(profilePicture);
-      // const profilePictureUrl = uploadResponse.secure_url;
-      const profilePictureUrl = "wlawal";
+      const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+      const profilePictureUrl = uploadResponse.secure_url;
 
       const newDoctor = await newUser.createDoctor({
         profilePictureUrl,
@@ -118,6 +117,8 @@ export const register = async (req, res) => {
       if (newUser && newDoctor && newDoctorEducations && newDoctorSchedules) {
         generateToken(newUser.id, res);
         return res.status(201).json({ message: "Registrasi Dokter berhasil" });
+      } else {
+        return res.status(500).json({ message: "error" });
       }
     }
   } catch (error) {
@@ -239,9 +240,9 @@ export const updateProfile = async (req, res) => {
 
     await user.save();
 
-    if (role === "doctor") {
+    if (role === "Dokter") {
       if (
-        /*         !profilePicture || */
+        !profilePicture ||
         !strNumber ||
         !sipNumber ||
         !practiceStartYear ||
@@ -258,9 +259,8 @@ export const updateProfile = async (req, res) => {
         return res.status(404).json({ message: "Dokter Tidak Ditemukan" });
       }
 
-      // const uploadResponse = await cloudinary.uploader.upload(profilePicture);
-      // const profilePictureUrl = uploadResponse.secure_url;
-      const profilePictureUrl = "wlawal";
+      const uploadResponse = await cloudinary.uploader.upload(profilePicture);
+      const profilePictureUrl = uploadResponse.secure_url;
 
       doctor.profilePictureUrl = profilePictureUrl;
       doctor.strNumber = strNumber;
