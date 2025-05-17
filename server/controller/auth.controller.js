@@ -100,8 +100,6 @@ export const register = async (req, res) => {
         offScheduleFee,
       });
 
-      console.log("ini edukasi: ", typeof doctorEducations);
-
       const educations = doctorEducations.map((edu) => ({
         ...edu,
         doctorId: newDoctor.id,
@@ -220,10 +218,8 @@ export const updateProfile = async (req, res) => {
       return res.status(400).json({ message: "Semua field harus diisi" });
     }
 
-    const user = await User.findOne({
-      where: {
-        id: req.user.id,
-      },
+    const user = await User.findByPk(decoded.id, {
+      attributes: { exclude: ["password"] },
     });
 
     if (!user) {
@@ -300,7 +296,7 @@ export const updateProfile = async (req, res) => {
       });
     } else {
       return res.status(200).json({
-        message: "Profil Berhasil Diperbarui",
+        message: "Profil Pasien Berhasil Diperbarui",
       });
     }
   } catch (error) {

@@ -2,7 +2,7 @@ import express from "express";
 import {
   addConsultation,
   addDoctorNote,
-  addRecipe,
+  addPrescription,
   getConsultations,
   updateConsultation,
 } from "../controller/consultation.controller.js";
@@ -10,10 +10,10 @@ import { protectRoute } from "../middleware/auth.middleware.js";
 
 const router = express.Router();
 
-router.post("/add", protectRoute, addConsultation);
-router.put("/update", protectRoute, updateConsultation);
+router.post("/", protectRoute, addConsultation);
+router.put("/", protectRoute, updateConsultation);
 router.get("/", protectRoute, getConsultations);
-router.post("doctor-note/add", protectRoute, addDoctorNote);
-router.post("/recipe/add", protectRoute, addRecipe);
+router.post("/:id/add-doctor-note", protectRoute, addDoctorNote);
+router.post("/:id/add-prescription", protectRoute, addPrescription);
 
 export default router;

@@ -46,7 +46,7 @@ export const sendMessage = async (req, res) => {
       messageId,
     });
 
-    res.status(200).json({
+    res.status(201).json({
       message: "Pesan berhasil dikirim",
     });
   } catch (error) {

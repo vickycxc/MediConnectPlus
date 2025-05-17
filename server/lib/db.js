@@ -16,7 +16,7 @@ export const connectDB = async () => {
   try {
     await sequelize.authenticate();
     console.log("Database connected successfully");
-    sequelize.sync();
+    sequelize.sync(); // ! Hapus di Production
     console.log("Database synchronized successfully");
   } catch (error) {
     console.error("Database connection/synchronization failed:", error);
