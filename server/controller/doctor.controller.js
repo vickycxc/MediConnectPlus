@@ -1,3 +1,5 @@
+import { Doctor } from "../models/index.js";
+
 export const getDoctors = async (req, res) => {
   try {
     const doctors = await Doctor.findAll({
